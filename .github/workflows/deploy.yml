@@ -31,11 +31,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache-dependency-path: conte-numerique/browser/package-lock.json
+          cache-dependency-path: conte-numerique/package-lock.json
 
       # Installe les dépendances du projet
       - name: Install dependencies
         run: npm i
+        working-directory: './conte-numerique/package.json'
 
       # Construit le projet
       - name: Build
