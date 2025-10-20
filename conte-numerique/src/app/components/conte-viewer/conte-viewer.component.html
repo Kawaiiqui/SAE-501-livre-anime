@@ -1,0 +1,115 @@
+<div class="conte-viewer">
+  <!-- Écran de chargement -->
+  <div class="loading-screen" *ngIf="isLoading" @fadeIn>
+    <div class="spinner"></div>
+    <p>Chargement du conte...</p>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="viewer-container" *ngIf="!isLoading">
+    
+    <header class="top-nav">
+      <button class="menu-btn" (click)="toggleMenu()" aria-label="Menu">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
+      
+      <div class="progress-container">
+        <div class="progress-bar" [style.width.%]="progress"></div>
+      </div>
+      
+      <div class="page-counter">
+        {{ currentSlideIndex + 1 }} / {{ slides.length }}
+      </div>
+    </header>
+
+    <!-- Slide actuelle -->
+    <main class="slide-container" [@slideAnimation]="currentSlideIndex">
+      <div class="slide" 
+           [style.background-image]="'url(' + currentSlide.imageUrl + ')'"
+           [style.background-color]="currentSlide.backgroundColor">
+        
+        <!-- Overla²y pour améliorer la lisibilité -->
+        <div class="slide-overlay"></div>
+        
+        <!-- Textes positionnés -->
+        <div class="text-elements">
+          <div *ngFor="let textElement of currentSlide.textElements" 
+               class="text-element"
+               [style.top]="textElement.position.top"
+               [style.bottom]="textElement.position.bottom"
+               [style.left]="textElement.position.left"
+               [style.right]="textElement.position.right"
+               [ngStyle]="textElement.style">
+            {{ textElement.content }}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Flèches de navigation -->
+    <nav class="slide-navigation">
+      <button class="nav-arrow nav-arrow-left" 
+              (click)="previousSlide()" 
+              [disabled]="currentSlideIndex === 0"
+              [class.disabled]="currentSlideIndex === 0"
+              aria-label="Slide précédente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      
+      <button class="nav-arrow nav-arrow-right" 
+              (click)="nextSlide()" 
+              [disabled]="currentSlideIndex === slides.length - 1"
+              [class.disabled]="currentSlideIndex === slides.length - 1"
+              aria-label="Slide suivante">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Menu latéral avec pagination -->
+    <aside class="side-menu" [class.open]="isMenuOpen">
+      <div class="menu-overlay" (click)="toggleMenu()"></div>
+      
+      <div class="menu-content">
+        <header class="menu-header">
+          <h2>Table des matières</h2>
+          <button class="close-btn" (click)="toggleMenu()" aria-label="Fermer le menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </header>
+        
+        <nav class="menu-list">
+          <button *ngFor="let slide of slides; let i = index" 
+                  class="menu-item"
+                  [class.active]="i === currentSlideIndex"
+                  (click)="goToSlide(i)">
+            <div class="menu-item-thumbnail" 
+                 [style.background-image]="'url(' + slide.imageUrl + ')'">
+            </div>
+            <div class="menu-item-info">
+              <span class="menu-item-number">{{ i + 1 }}</span>
+              <span class="menu-item-title">{{ slide.title }}</span>
+            </div>
+          </button>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Indicateurs de slide (Tablette) -->
+    <div class="slide-indicators" *ngIf="isTablet">
+      <span *ngFor="let slide of slides; let i = index" 
+            class="indicator"
+            [class.active]="i === currentSlideIndex"
+            (click)="goToSlide(i)">
+      </span>
+    </div>
+  </div>
+</div>
