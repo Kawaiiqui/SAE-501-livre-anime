@@ -36,7 +36,7 @@ jobs:
       # Installe les dépendances du projet
       - name: Install dependencies
         run: npm i
-        working-directory: './conte-numerique/package.json'
+        working-directory: './SAE-501-livre-numerique'
 
       # Construit le projet
       - name: Build
