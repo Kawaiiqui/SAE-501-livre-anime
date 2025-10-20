@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "build": "ng build --configuration production --base-href /SAE-501-livre-anime/"
-  }
-}

@@ -49,7 +49,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist/nom-du-projet/browser'  # ⚠️ À ADAPTER selon votre framework (voir ci-dessous)
+          path: './dist/conte-numerique/browser'  # ⚠️ À ADAPTER selon votre framework (voir ci-dessous)
+      - name: Build
+        run: npm run build -- --base-href=/SAE-501-livre-anime/
 
   # Job 2 : Déploiement sur GitHub Pages
   deploy:
