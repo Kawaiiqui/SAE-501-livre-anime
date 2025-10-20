@@ -36,7 +36,7 @@ jobs:
       # Installe les dépendances du projet
       - name: Install dependencies
         run: npm i
-        working-directory: './SAE-501-livre-anime'
+        working-directory: 'conte-numerique'
 
       # Construit le projet
       - name: Build
