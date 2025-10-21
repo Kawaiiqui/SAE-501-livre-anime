@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href /SAE-501-livre-anime/",
+    "build": "ng build --configuration production --base-href /conte-numerique/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
