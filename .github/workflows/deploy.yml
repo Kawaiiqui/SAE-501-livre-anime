@@ -40,7 +40,7 @@ jobs:
 
       # Construit le projet
       - name: Build
-        run: npm run build --base-href=/SAE-501-livre-anime/
+        run: npm run build
 
       # Configure GitHub Pages
       - name: Setup Pages
