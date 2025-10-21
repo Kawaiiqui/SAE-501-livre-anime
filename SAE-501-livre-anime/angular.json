@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "conte-numerique": {
+    "SAE-501-livre-anime": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
