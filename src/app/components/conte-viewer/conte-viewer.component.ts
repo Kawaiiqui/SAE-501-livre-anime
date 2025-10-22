@@ -36,7 +36,7 @@ export class ConteViewerComponent implements OnInit {
   isTablet: boolean = false;
   isLoading: boolean = true;
 
-   constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private readonly cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.checkScreenSize();
@@ -44,10 +44,13 @@ export class ConteViewerComponent implements OnInit {
   }
 
   get currentSlide(): Slide {
-    return this.slides[this.currentSlideIndex];
+    return this.slides && this.slides.length > 0
+      ? this.slides[this.currentSlideIndex]
+      : ({} as Slide);
   }
 
   get progress(): number {
+    if (!this.slides || this.slides.length === 0) return 0;
     return ((this.currentSlideIndex + 1) / this.slides.length) * 100;
   }
 
@@ -87,7 +90,8 @@ export class ConteViewerComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(): void {
+  onResize(event: UIEvent): void {
+    // event currently unused but kept for correct HostListener signature
     this.checkScreenSize();
   }
 

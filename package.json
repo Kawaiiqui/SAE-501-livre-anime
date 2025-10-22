@@ -1,5 +1,5 @@
 {
-  "name": "SAE-501-livre-anime",
+  "name": "sae-501-livre-anime",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -23,6 +23,7 @@
   "private": true,
   "dependencies": {
     "@angular/common": "^20.3.0",
+  "@angular/animations": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.0",
