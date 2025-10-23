@@ -35,6 +35,28 @@
         <!-- Overlay pour améliorer la lisibilité -->
         <div class="slide-overlay"></div>
         
+        <!-- Paillettes dorées pour la première slide -->
+        <div *ngIf="currentSlideIndex === 0">
+          <div class="golden-sparkle sparkle-1"></div>
+          <div class="golden-sparkle sparkle-2"></div>
+          <div class="golden-sparkle sparkle-3"></div>
+          <div class="golden-sparkle sparkle-4"></div>
+          <div class="golden-sparkle sparkle-5"></div>
+          <div class="golden-sparkle sparkle-6"></div>
+          <div class="golden-sparkle sparkle-7"></div>
+          <div class="golden-sparkle sparkle-8"></div>
+          <div class="golden-sparkle sparkle-9"></div>
+          <div class="golden-sparkle sparkle-10"></div>
+          <div class="white-sparkle sparkle-11"></div>
+          <div class="white-sparkle sparkle-12"></div>
+          <div class="white-sparkle sparkle-13"></div>
+          <div class="white-sparkle sparkle-14"></div>
+          <div class="white-sparkle sparkle-15"></div>
+          <div class="white-sparkle sparkle-16"></div>
+          <div class="white-sparkle sparkle-17"></div>
+          <div class="white-sparkle sparkle-18"></div>
+        </div>
+        
         <!-- Textes positionnés -->
         <div class="text-elements">
           <div *ngFor="let textElement of currentSlide.textElements" 

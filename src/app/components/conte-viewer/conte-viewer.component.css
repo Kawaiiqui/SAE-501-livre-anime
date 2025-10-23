@@ -619,3 +619,49 @@
 @media (prefers-reduced-motion: reduce) {
   .angel-halo .halo-circle { animation: none; }
 }
+
+/* ========== Paillettes dorées pour la slide 1 ========== */
+.golden-sparkle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 215, 0, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.white-sparkle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: rgba(252, 251, 249, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* Position des paillettes */
+.sparkle-1 { top: 33.5%; left: 49.5%; animation: sparkle 3s infinite ease-in-out; }
+.sparkle-2 { top: 39%; left: 41.5%; animation: sparkle 3s infinite ease-in-out 0.5s; }
+.sparkle-3 { top: 39%; left: 57.5%; animation: sparkle 3s infinite ease-in-out 1s; }
+.sparkle-4 { top: 43.7%; left: 35%; animation: sparkle 3s infinite ease-in-out 1.5s; } /*R*/
+.sparkle-5 { top: 43.5%; left: 64%; animation: sparkle 3s infinite ease-in-out 2s; }
+.sparkle-6 { top: 50%; left: 35%; animation: sparkle 3s infinite ease-in-out 2.5s; }
+.sparkle-7 { top: 50%; left: 64%; animation: sparkle 3s infinite ease-in-out 0.7s; } /*B*/
+.sparkle-8 { top: 56%; left: 41.5%; animation: sparkle 3s infinite ease-in-out 1.2s; }
+.sparkle-9 { top: 56%; left: 57.5%; animation: sparkle 3s infinite ease-in-out 2.5s; }
+.sparkle-10 { top: 61.5%; left: 49.5%; animation: sparkle 3s infinite ease-in-out 0.7s; }
+.sparkle-11 { top: 35.5%; left: 45.3%; animation: sparkle 3s infinite ease-in-out 1.2s; }
+.sparkle-12 { top: 35.5%; left: 53.5%; animation: sparkle 3s infinite ease-in-out 0.7s; }
+.sparkle-13 { top: 40%; left: 37.8%; animation: sparkle 3s infinite ease-in-out 1.2s; }
+.sparkle-14 { top: 40%; left: 61%; animation: sparkle 3s infinite ease-in-out 0.7s; }
+.sparkle-15 { top: 55%; left: 37.7%; animation: sparkle 3s infinite ease-in-out 1.2s; }
+.sparkle-16 { top: 55%; left: 61%; animation: sparkle 3s infinite ease-in-out 0.7s; }
+.sparkle-17 { top: 58.7%; left: 45.2%; animation: sparkle 3s infinite ease-in-out 1.2s; }
+.sparkle-18 { top: 58.7%; left: 53.5%; animation: sparkle 3s infinite ease-in-out 1.2s; }
