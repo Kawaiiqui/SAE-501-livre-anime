@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "conte-numerique:build:production"
+              "buildTarget": "SAE-501-livre-anime:build:production"
             },
             "development": {
-              "buildTarget": "conte-numerique:build:development"
+              "buildTarget": "SAE-501-livre-anime:build:development"
             }
           },
           "defaultConfiguration": "development"
