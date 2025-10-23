@@ -35,8 +35,34 @@
         <!-- Overlay pour améliorer la lisibilité -->
         <div class="slide-overlay"></div>
         
-        <!-- Paillettes dorées pour la première slide -->
-        <div *ngIf="currentSlideIndex === 0">
+        <!-- Textes positionnés -->
+        <div class="text-elements">
+          <div *ngFor="let textElement of currentSlide.textElements" 
+               class="text-element"
+               [style.top]="textElement.position.top"
+               [style.bottom]="textElement.position.bottom"
+               [style.left]="textElement.position.left"
+               [style.right]="textElement.position.right"
+               [ngStyle]="textElement.style">
+            {{ textElement.content }}
+          </div>
+        </div>
+        
+        <!-- Animation spéciale pour la slide 2 avec les fleurs -->
+        <div *ngIf="isFlowerSlide" class="flowers-animation">
+          <img src="assets/pictures/slide1_blanche.png" 
+               class="flower flower-white"
+               @flowerEnter
+               [@flowerRotate]="flowerRotationState"
+               alt="Fleur blanche">
+          <img src="assets/pictures/slide1_rouge.png" 
+               class="flower flower-red"
+               @flowerEnter
+               [@flowerRotate]="flowerRotationState"
+               alt="Fleur rouge">
+        </div>
+
+           <div *ngIf="currentSlideIndex === 0">
           <div class="golden-sparkle sparkle-1"></div>
           <div class="golden-sparkle sparkle-2"></div>
           <div class="golden-sparkle sparkle-3"></div>
@@ -73,36 +99,12 @@
           <div class="white-sparkle sparkle-31"></div>
           <div class="white-sparkle sparkle-32"></div>
         </div>
-        
-        <!-- Textes positionnés -->
-        <div class="text-elements">
-          <div *ngFor="let textElement of currentSlide.textElements" 
-               class="text-element"
-               [style.top]="textElement.position.top"
-               [style.bottom]="textElement.position.bottom"
-               [style.left]="textElement.position.left"
-               [style.right]="textElement.position.right"
-               [ngStyle]="textElement.style">
-            {{ textElement.content }}
-          </div>
-        </div>
-        
-        <!-- Animation spéciale pour la slide 2 avec les fleurs -->
-        <div *ngIf="isFlowerSlide" class="flowers-animation">
-          <img src="assets/pictures/slide1_blanche.png" 
-               class="flower flower-white"
-               @flowerEnter
-               [@flowerRotate]="flowerRotationState"
-               alt="Fleur blanche">
-          <img src="assets/pictures/slide1_rouge.png" 
-               class="flower flower-red"
-               @flowerEnter
-               [@flowerRotate]="flowerRotationState"
-               alt="Fleur rouge">
         </div>
 
-        <!-- Rayons de soleil pour la slide 3 (index 2) -->
-        <div *ngIf="currentSlideIndex === 2" class="sun-rays" aria-hidden="true">
+        <div class="text-elements">
+
+        <!-- Rayons de soleil pour la slide 3 (index 2) et slide 14 (index 13) -->
+        <div *ngIf="currentSlideIndex === 2 || currentSlideIndex === 13" class="sun-rays" aria-hidden="true">
           <div class="sun-ray ray-1"></div>
           <div class="sun-ray ray-2"></div>
         </div>
@@ -113,6 +115,39 @@
           <span class="z z2">Z</span>
           <span class="z z3">Z</span>
         </div>
+
+        <!-- Rayon angélique principal (milieu haut -> milieu bas) pour slide 6 — fade in/out toutes les 5s -->
+        <div *ngIf="currentSlideIndex === 5" class="angel-ray" aria-hidden="true">
+          <div class="beam" role="presentation"></div>
+        </div>
+        
+        <!-- Ondes de choc rondes pour la slide 9 (index 8) -->
+        <div *ngIf="currentSlideIndex === 8" class="shockwaves" aria-hidden="true">
+          <div class="wave wave-1" aria-hidden="true"></div>
+          <div class="wave wave-2" aria-hidden="true"></div>
+          <div class="wave wave-3" aria-hidden="true"></div>
+        </div>
+        
+          <!-- Motif centré animé pour la slide 15 (index 14) -->
+          <div *ngIf="currentSlideIndex === 14" class="center-motif" aria-hidden="true">
+            <!-- Inline SVG with curved strokes to match reference -->
+            <svg class="motif-svg" width="220" height="140" viewBox="0 0 220 140" role="presentation" aria-hidden="true">
+              <g fill="none" stroke="#0b0b0b" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+                <path class="stroke s1" d="M34 96c22-6 28-38 46-40" />
+                <path class="stroke s2" d="M138 38c14-12 26-6 34 4" />
+                <path class="stroke s3" d="M80 110c10-8 26-20 42-12" />
+              </g>
+            </svg>
+          </div>
+        
+          <!-- Poils blancs tombants pour la slide 17 (index 16) -->
+          <div *ngIf="currentSlideIndex === 16" class="falling-hairs" aria-hidden="true">
+            <div class="hair h1"></div>
+            <div class="hair h2"></div>
+            <div class="hair h3"></div>
+            <div class="hair h4"></div>
+            <div class="hair h5"></div>
+          </div>
       </div>
     </main>
 

@@ -580,6 +580,71 @@
   }
 }
 
+/* ========== Slide 6 : Rayon angélique principal avec scintillements dorés ========== */
+.angel-ray {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44%; /* enlarged beam at top */
+  height: 100%;
+  pointer-events: none;
+  z-index: 21;
+  display: block;
+}
+
+/* beam: tapered shape using conic + radial gradients, bottom is wider */
+.angel-ray .beam {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36%; /* wider beam */
+  height: 92%;
+  border-radius: 50% / 8%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,250,240,0.8) 18%, rgba(255,240,180,0.35) 50%, rgba(255,235,140,0.18) 78%, rgba(255,235,140,0.0) 100%);
+  filter: blur(18px) saturate(1.08);
+  transform-origin: top center;
+  opacity: 0; /* start hidden, will fade in/out */
+  animation: beam-fade 5s ease-in-out infinite;
+}
+
+/* widen the beam visually at the bottom with an overlay */
+.angel-ray .beam::after {
+  content: '';
+  position: absolute;
+  bottom: -12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255,250,220,0.48) 0%, rgba(255,220,120,0.26) 30%, rgba(255,220,120,0.0) 70%);
+  filter: blur(30px);
+  box-shadow: 0 0 120px rgba(255,240,200,0.25);
+}
+
+/* sparkles inside the beam */
+.angel-ray .sparkles { display:none; }
+
+@keyframes beam-fade {
+  0% { opacity: 0; }
+  25% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+  75% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .angel-ray .spark { animation: none; opacity: 0.8; }
+  .angel-ray .beam { filter: none; animation: none; opacity: 0.95; }
+}
+
+@media (max-width: 768px) {
+  .angel-ray { width: 44%; }
+  .angel-ray .beam { width: 36%; }
+}
+
 /* ========== Slide 6 : Oréole angélique blanche centrée ========== */
 .angel-halo {
   position: absolute;
@@ -593,6 +658,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .angel-halo .halo-circle {
@@ -620,7 +686,6 @@
   .angel-halo .halo-circle { animation: none; }
 }
 
-/* ========== Paillettes dorées pour la slide 1 ========== */
 .golden-sparkle {
   position: fixed;
   width: 8px;
@@ -679,3 +744,398 @@
 .sparkle-30 { top: 58%; left: 63%; animation: sparkle 3s infinite ease-in-out 0.7s; }
 .sparkle-31 { top: 62%; left: 44.7%; animation: sparkle 3s infinite ease-in-out 1.2s; }
 .sparkle-32 { top: 62%; left: 54%; animation: sparkle 3s infinite ease-in-out 1.2s; }
+
+
+
+/* ========== Slide 9 : Ondes de choc rondes (shockwaves) ========== */
+.shockwaves {
+  position: absolute;
+  top: 34.5%;
+  left: 53.5%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  pointer-events: none;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shockwaves .wave {
+  position: absolute;
+  width: 8px; 
+  height: 8px;
+  border-radius: 50%;
+  border: 6px solid rgb(255, 255, 255); 
+  background: rgba(255, 167, 84, 0.12); 
+  box-shadow: 0 0 36px rgba(255, 200, 100, 0.28), inset 0 0 6px rgba(255,255,255,0.04);
+  opacity: 0;
+  transform: scale(0.02);
+  animation: shockwave-scale 4.2s cubic-bezier(0.2, 0.9, 0.3, 1) infinite;
+}
+
+.shockwaves .wave-1 { animation-delay: 0s; }
+.shockwaves .wave-2 { animation-delay: 0.9s; }
+.shockwaves .wave-3 { animation-delay: 1.8s; }
+
+@keyframes shockwave-scale {
+  /* Visible animation portion: 0% -> 52% (~2.2s of 4.2s) */
+  0% {
+    opacity: 0;
+    transform: scale(0.02);
+    border-width: 6px;
+  }
+  6% {
+    opacity: 0.95; /* immediate strong peak for shout effect */
+    transform: scale(0.12);
+  }
+  28% {
+    opacity: 0.5;
+    transform: scale(0.36);
+  }
+  52% {
+    opacity: 0.18;
+    transform: scale(0.7);
+  }
+  /* Remaining portion is pause: keep opacity 0 and final scale for the pause */
+  53% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+    border-width: 3px;
+  }
+}
+
+/* Slight variation for size/width so waves look different */
+.shockwaves .wave-1 { width: 6%; height: 6%; }
+.shockwaves .wave-2 { width: 20%; height: 20%; }
+.shockwaves .wave-3 { width: 38%; height: 38%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .shockwaves .wave { animation: none; opacity: 0.18; transform: scale(0.9); }
+}
+
+/* ========== Slide 15 : Motif centré animé (bob + sway) ========== */
+.center-motif {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  rotate: -20deg;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.center-motif svg.motif-svg {
+  width: 220px;
+  height: 140px;
+  transform-origin: center;
+  animation: motif-bob 5.2s ease-in-out infinite, motif-sway 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18));
+}
+
+.center-motif .stroke {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 0;
+  opacity: 0.98;
+}
+
+/* subtle draw & fade on each stroke to make them look organic */
+.center-motif .s1 { animation: draw-stroke 2.2s ease-out 0s 1 both; }
+.center-motif .s2 { animation: draw-stroke 2.2s ease-out 0.2s 1 both; }
+.center-motif .s3 { animation: draw-stroke 2.2s ease-out 0.4s 1 both; }
+
+/* After drawing, add a subtle perpetual wiggle with staggered start */
+.center-motif .s1 { animation: draw-stroke 2.2s ease-out 0s 1 both, stroke-wiggle 3.6s ease-in-out 2.4s infinite; }
+.center-motif .s2 { animation: draw-stroke 2.2s ease-out 0.2s 1 both, stroke-wiggle 3.6s ease-in-out 2.6s infinite; }
+.center-motif .s3 { animation: draw-stroke 2.2s ease-out 0.4s 1 both, stroke-wiggle 3.6s ease-in-out 2.8s infinite; }
+
+@keyframes draw-stroke {
+  0% { stroke-dashoffset: 180; opacity: 0; }
+  60% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes motif-bob {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); }
+  25% { transform: translateY(-6px) translateX(0) rotate(0.2deg); }
+  50% { transform: translateY(-10px) translateX(0) rotate(-0.2deg); }
+  75% { transform: translateY(-6px) translateX(0) rotate(0.15deg); }
+  100% { transform: translateY(0) translateX(0) rotate(0deg); }
+}
+
+@keyframes motif-sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes stroke-wiggle {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(0.6deg); }
+  50% { transform: translateY(0) rotate(-0.6deg); }
+  75% { transform: translateY(1px) rotate(0.4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .center-motif svg.motif-svg { animation: none; transform: translateY(-4px); }
+}
+
+/* ========== Slide 17 : Poils blancs tombants centrés avec courbes ========== */
+.falling-hairs {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 60%;
+  pointer-events: none;
+  z-index: 40;
+  display: block;
+}
+
+.falling-hairs .hair {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.7), rgba(255,255,255,0.4));
+  transform-origin: top center;
+  border-radius: 50% 50% 80% 80%;
+  opacity: 0;
+  filter: blur(0.2px);
+  clip-path: path('M 1,0 Q 0.5,3 1.5,6 Q 0.8,9 1,12');
+}
+
+/* Individual positions and timing with curved animations */
+.falling-hairs .h1 { left: 40%; animation: hair-fall-curve1 3.2s cubic-bezier(0.22,1,0.36,1) 0s infinite; }
+.falling-hairs .h2 { left: 48%; animation: hair-fall-curve2 3.6s cubic-bezier(0.22,1,0.36,1) 0.4s infinite; }
+.falling-hairs .h3 { left: 52%; animation: hair-fall-curve3 2.8s cubic-bezier(0.22,1,0.36,1) 0.9s infinite; }
+.falling-hairs .h4 { left: 60%; animation: hair-fall-curve4 3.8s cubic-bezier(0.22,1,0.36,1) 0.2s infinite; }
+.falling-hairs .h5 { left: 55%; animation: hair-fall-curve5 3.4s cubic-bezier(0.22,1,0.36,1) 0.6s infinite; }
+
+/* Animation curve 1 : Ondulation droite-gauche-droite */
+@keyframes hair-fall-curve1 {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) translateX(0) rotate(-8deg) scaleY(0.5);
+  }
+  10% {
+    opacity: 0.95;
+    transform: translateY(4px) translateX(15px) rotate(18deg) scaleY(1.0);
+  }
+  25% {
+    transform: translateY(50px) translateX(-12px) rotate(-15deg) scaleY(1.4);
+  }
+  40% {
+    transform: translateY(95px) translateX(18px) rotate(22deg) scaleY(1.7);
+  }
+  55% {
+    transform: translateY(140px) translateX(-10px) rotate(-12deg) scaleY(2.0);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(185px) translateX(14px) rotate(16deg) scaleY(2.3);
+  }
+  85% {
+    opacity: 0.5;
+    transform: translateY(220px) translateX(-8px) rotate(-10deg) scaleY(2.5);
+  }
+  95% {
+    opacity: 0.2;
+    transform: translateY(245px) translateX(5px) rotate(8deg) scaleY(2.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(260px) translateX(0) rotate(5deg) scaleY(2.8);
+  }
+}
+
+/* Animation curve 2 : Ondulation gauche-droite-gauche */
+@keyframes hair-fall-curve2 {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) translateX(0) rotate(-8deg) scaleY(0.5);
+  }
+  10% {
+    opacity: 0.95;
+    transform: translateY(4px) translateX(-18px) rotate(-20deg) scaleY(1.0);
+  }
+  25% {
+    transform: translateY(50px) translateX(14px) rotate(16deg) scaleY(1.4);
+  }
+  40% {
+    transform: translateY(95px) translateX(-20px) rotate(-24deg) scaleY(1.7);
+  }
+  55% {
+    transform: translateY(140px) translateX(12px) rotate(14deg) scaleY(2.0);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(185px) translateX(-16px) rotate(-18deg) scaleY(2.3);
+  }
+  85% {
+    opacity: 0.5;
+    transform: translateY(220px) translateX(10px) rotate(12deg) scaleY(2.5);
+  }
+  95% {
+    opacity: 0.2;
+    transform: translateY(245px) translateX(-6px) rotate(-8deg) scaleY(2.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(260px) translateX(0) rotate(0deg) scaleY(2.8);
+  }
+}
+
+/* Animation curve 3 : Grande amplitude */
+@keyframes hair-fall-curve3 {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) translateX(0) rotate(-8deg) scaleY(0.5);
+  }
+  10% {
+    opacity: 0.95;
+    transform: translateY(4px) translateX(22px) rotate(25deg) scaleY(1.0);
+  }
+  25% {
+    transform: translateY(50px) translateX(-18px) rotate(-20deg) scaleY(1.4);
+  }
+  40% {
+    transform: translateY(95px) translateX(25px) rotate(28deg) scaleY(1.7);
+  }
+  55% {
+    transform: translateY(140px) translateX(-15px) rotate(-18deg) scaleY(2.0);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(185px) translateX(20px) rotate(22deg) scaleY(2.3);
+  }
+  85% {
+    opacity: 0.5;
+    transform: translateY(220px) translateX(-12px) rotate(-14deg) scaleY(2.5);
+  }
+  95% {
+    opacity: 0.2;
+    transform: translateY(245px) translateX(8px) rotate(10deg) scaleY(2.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(260px) translateX(0) rotate(6deg) scaleY(2.8);
+  }
+}
+
+/* Animation curve 4 : Douce ondulation */
+@keyframes hair-fall-curve4 {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) translateX(0) rotate(-8deg) scaleY(0.5);
+  }
+  10% {
+    opacity: 0.95;
+    transform: translateY(4px) translateX(-16px) rotate(-18deg) scaleY(1.0);
+  }
+  25% {
+    transform: translateY(50px) translateX(20px) rotate(22deg) scaleY(1.4);
+  }
+  40% {
+    transform: translateY(95px) translateX(-22px) rotate(-26deg) scaleY(1.7);
+  }
+  55% {
+    transform: translateY(140px) translateX(16px) rotate(18deg) scaleY(2.0);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(185px) translateX(-18px) rotate(-20deg) scaleY(2.3);
+  }
+  85% {
+    opacity: 0.5;
+    transform: translateY(220px) translateX(14px) rotate(16deg) scaleY(2.5);
+  }
+  95% {
+    opacity: 0.2;
+    transform: translateY(245px) translateX(-8px) rotate(-10deg) scaleY(2.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(260px) translateX(0) rotate(4deg) scaleY(2.8);
+  }
+}
+
+/* Animation curve 5 : Asymétrique */
+@keyframes hair-fall-curve5 {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) translateX(0) rotate(-8deg) scaleY(0.5);
+  }
+  10% {
+    opacity: 0.95;
+    transform: translateY(4px) translateX(20px) rotate(22deg) scaleY(1.0);
+  }
+  25% {
+    transform: translateY(50px) translateX(-16px) rotate(-18deg) scaleY(1.4);
+  }
+  40% {
+    transform: translateY(95px) translateX(18px) rotate(20deg) scaleY(1.7);
+  }
+  55% {
+    transform: translateY(140px) translateX(-20px) rotate(-22deg) scaleY(2.0);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(185px) translateX(16px) rotate(18deg) scaleY(2.3);
+  }
+  85% {
+    opacity: 0.5;
+    transform: translateY(220px) translateX(-12px) rotate(-14deg) scaleY(2.5);
+  }
+  95% {
+    opacity: 0.2;
+    transform: translateY(245px) translateX(10px) rotate(12deg) scaleY(2.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(260px) translateX(0) rotate(5deg) scaleY(2.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling-hairs .hair { 
+    animation: none; 
+    opacity: 1; 
+    transform: translateY(40px); 
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .falling-hairs {
+    width: 180px;
+  }
+  
+  .falling-hairs .hair {
+    width: 1.8px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .falling-hairs {
+    width: 140px;
+  }
+  
+  .falling-hairs .hair {
+    width: 1.5px;
+    height: 8px;
+  }
+}

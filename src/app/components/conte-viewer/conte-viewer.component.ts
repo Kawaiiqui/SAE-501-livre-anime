@@ -45,11 +45,11 @@ import { SLIDES } from '../../data/slides.data';
     ]),
     // Animation de rotation continue pour les fleurs
     trigger('flowerRotate', [
-      state('initial', style({ transform: 'rotate(0)' })),
-      state('rotate', style({ transform: 'rotate(360deg)' })),
-      state('rotate2', style({ transform: 'rotate(720deg)' })),
-      transition('* => rotate', animate('4s linear')),
-      transition('* => rotate2', animate('4s linear'))
+      transition('* => rotate', [
+        animate('4s linear', 
+          style({ transform: 'rotate(360deg)' })
+        )
+      ])
     ])
   ]
 })
@@ -63,7 +63,7 @@ export class ConteViewerComponent implements OnInit {
   // État pour gérer les animations des fleurs
   flowerRotationState: string = 'initial';
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.checkScreenSize();
@@ -71,13 +71,10 @@ export class ConteViewerComponent implements OnInit {
   }
 
   get currentSlide(): Slide {
-    return this.slides && this.slides.length > 0
-      ? this.slides[this.currentSlideIndex]
-      : ({} as Slide);
+    return this.slides[this.currentSlideIndex];
   }
 
   get progress(): number {
-    if (!this.slides?.length) return 0;
     return ((this.currentSlideIndex + 1) / this.slides.length) * 100;
   }
 
@@ -134,7 +131,7 @@ export class ConteViewerComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: UIEvent): void {
+  onResize(): void {
     this.checkScreenSize();
   }
 
