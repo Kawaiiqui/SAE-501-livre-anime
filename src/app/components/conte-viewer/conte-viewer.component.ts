@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, style, animate, state, keyframes } from '@angular/animations';
 import { Slide } from '../../models/slide.model';
 import { SLIDES } from '../../data/slides.data';
 
@@ -26,6 +26,30 @@ import { SLIDES } from '../../data/slides.data';
         style({ opacity: 0 }),
         animate('300ms ease-in', style({ opacity: 1 }))
       ])
+    ]),
+    // Animation pour les fleurs - entrée avec rotation
+    trigger('flowerEnter', [
+      transition('void => *', [
+        style({ 
+          opacity: 0, 
+          transform: 'scale(0) rotate(0deg)'
+        }),
+        animate('1200ms cubic-bezier(0.34, 1.56, 0.64, 1)', 
+          keyframes([
+            style({ opacity: 0, transform: 'scale(0) rotate(0deg)', offset: 0 }),
+            style({ opacity: 0.7, transform: 'scale(1.1) rotate(360deg)', offset: 0.7 }),
+            style({ opacity: 1, transform: 'scale(1) rotate(720deg)', offset: 1 })
+          ])
+        )
+      ])
+    ]),
+    // Animation de rotation continue pour les fleurs
+    trigger('flowerRotate', [
+      transition('* => rotate', [
+        animate('4s linear', 
+          style({ transform: 'rotate(360deg)' })
+        )
+      ])
     ])
   ]
 })
@@ -35,8 +59,11 @@ export class ConteViewerComponent implements OnInit {
   isMenuOpen: boolean = false;
   isTablet: boolean = false;
   isLoading: boolean = true;
+  
+  // État pour gérer les animations des fleurs
+  flowerRotationState: string = 'initial';
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.checkScreenSize();
@@ -44,38 +71,52 @@ export class ConteViewerComponent implements OnInit {
   }
 
   get currentSlide(): Slide {
-    return this.slides && this.slides.length > 0
-      ? this.slides[this.currentSlideIndex]
-      : ({} as Slide);
+    return this.slides[this.currentSlideIndex];
   }
 
   get progress(): number {
-    if (!this.slides || this.slides.length === 0) return 0;
     return ((this.currentSlideIndex + 1) / this.slides.length) * 100;
+  }
+
+  // Vérifie si on est sur la slide avec les fleurs (index 1 = slide 2)
+  get isFlowerSlide(): boolean {
+    return this.currentSlideIndex === 1;
   }
 
   nextSlide(): void {
     if (this.currentSlideIndex < this.slides.length - 1) {
       this.currentSlideIndex++;
-       this.cdr.detectChanges();
+      this.triggerFlowerAnimation();
+      this.cdr.detectChanges();
     }
   }
 
   previousSlide(): void {
     if (this.currentSlideIndex > 0) {
       this.currentSlideIndex--;
-       this.cdr.detectChanges();
+      this.triggerFlowerAnimation();
+      this.cdr.detectChanges();
     }
   }
 
   goToSlide(index: number): void {
     this.currentSlideIndex = index;
     this.isMenuOpen = false;
-     this.cdr.detectChanges();
+    this.triggerFlowerAnimation();
+    this.cdr.detectChanges();
   }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  // Déclenche l'animation de rotation continue des fleurs
+  private triggerFlowerAnimation(): void {
+    if (this.isFlowerSlide) {
+      setTimeout(() => {
+        this.flowerRotationState = this.flowerRotationState === 'rotate' ? 'rotate2' : 'rotate';
+      }, 1300); // Après l'animation d'entrée
+    }
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -90,8 +131,7 @@ export class ConteViewerComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: UIEvent): void {
-    // event currently unused but kept for correct HostListener signature
+  onResize(): void {
     this.checkScreenSize();
   }
 

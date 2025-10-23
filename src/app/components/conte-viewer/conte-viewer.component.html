@@ -47,6 +47,20 @@
             {{ textElement.content }}
           </div>
         </div>
+        
+        <!-- Animation spéciale pour la slide 2 avec les fleurs -->
+        <div *ngIf="isFlowerSlide" class="flowers-animation">
+          <img src="assets/pictures/slide1_blanche.png" 
+               class="flower flower-white"
+               @flowerEnter
+               [@flowerRotate]="flowerRotationState"
+               alt="Fleur blanche">
+          <img src="assets/pictures/slide1_rouge.png" 
+               class="flower flower-red"
+               @flowerEnter
+               [@flowerRotate]="flowerRotationState"
+               alt="Fleur rouge">
+        </div>
       </div>
     </main>
 
