@@ -27,15 +27,10 @@
     <!-- Slide actuelle -->
     <main class="slide-container" [@slideAnimation]="currentSlideIndex">
       <div class="slide" 
+           [style.background-image]="'url(' + currentSlide.imageUrl + ')'"
            [style.background-color]="currentSlide.backgroundColor">
-        <!-- Responsive image avec NgOptimizedImage -->
-        <img class="slide-img" 
-             [ngSrc]="currentSlide.imageUrl" 
-             [alt]="currentSlide.title"
-             width="1920" 
-             height="1080"
-             priority
-             (error)="handleImageError($event)" />
+        <!-- Responsive image fallback: ensures full image is visible and scales with viewport -->
+        <img class="slide-img" [src]="currentSlide.imageUrl" alt="{{ currentSlide.title }}" aria-hidden="true" />
         
         <!-- Overlay pour améliorer la lisibilité -->
         <div class="slide-overlay"></div>
@@ -65,6 +60,19 @@
                @flowerEnter
                [@flowerRotate]="flowerRotationState"
                alt="Fleur rouge">
+        </div>
+
+        <!-- Rayons de soleil pour la slide 3 (index 2) -->
+        <div *ngIf="currentSlideIndex === 2" class="sun-rays" aria-hidden="true">
+          <div class="sun-ray ray-1"></div>
+          <div class="sun-ray ray-2"></div>
+        </div>
+
+        <!-- Trois 'Z' pour indiquer le sommeil sur la slide 5 (index 4) -->
+        <div *ngIf="currentSlideIndex === 4" class="sleep-z" aria-hidden="true">
+          <span class="z z1">Z</span>
+          <span class="z z2">Z</span>
+          <span class="z z3">Z</span>
         </div>
       </div>
     </main>
