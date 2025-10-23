@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { trigger, transition, style, animate, state, keyframes } from '@angular/animations';
 import { Slide } from '../../models/slide.model';
 import { SLIDES } from '../../data/slides.data';
@@ -7,7 +8,7 @@ import { SLIDES } from '../../data/slides.data';
 @Component({
   selector: 'app-conte-viewer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './conte-viewer.component.html',
   styleUrls: ['./conte-viewer.component.css'],
   animations: [
@@ -131,7 +132,7 @@ export class ConteViewerComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(): void {
+  onResize(event: UIEvent): void {
     this.checkScreenSize();
   }
 
@@ -186,6 +187,15 @@ export class ConteViewerComponent implements OnInit {
       } else {
         this.previousSlide();
       }
+    }
+  }
+
+  handleImageError(event: ErrorEvent): void {
+    console.error('Erreur de chargement de l\'image:', event);
+    // Optionnellement, afficher un message d'erreur à l'utilisateur ou charger une image de remplacement
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement) {
+      imgElement.style.display = 'none'; // Cache l'image qui n'a pas pu être chargée
     }
   }
 }

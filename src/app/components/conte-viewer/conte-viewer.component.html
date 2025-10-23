@@ -27,10 +27,15 @@
     <!-- Slide actuelle -->
     <main class="slide-container" [@slideAnimation]="currentSlideIndex">
       <div class="slide" 
-           [style.background-image]="'url(' + currentSlide.imageUrl + ')'"
            [style.background-color]="currentSlide.backgroundColor">
-        <!-- Responsive image fallback: ensures full image is visible and scales with viewport -->
-        <img class="slide-img" [src]="currentSlide.imageUrl" alt="{{ currentSlide.title }}" aria-hidden="true" />
+        <!-- Responsive image avec NgOptimizedImage -->
+        <img class="slide-img" 
+             [ngSrc]="currentSlide.imageUrl" 
+             [alt]="currentSlide.title"
+             width="1920" 
+             height="1080"
+             priority
+             (error)="handleImageError($event)" />
         
         <!-- Overlay pour améliorer la lisibilité -->
         <div class="slide-overlay"></div>
