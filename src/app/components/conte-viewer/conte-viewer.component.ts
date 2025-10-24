@@ -131,7 +131,7 @@ export class ConteViewerComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(): void {
+  onResize(event: Event): void {
     this.checkScreenSize();
   }
 
