@@ -188,20 +188,95 @@
   pointer-events: none;
 }
 
-/* ========== Éléments de texte ========== */
-.text-elements {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 20;
-}
-
+/* Modifier la section .text-element existante */
 .text-element {
   position: absolute;
   transform: translate(-50%, -50%);
   animation: fadeInUp 0.8s ease-out forwards;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   word-wrap: break-word;
+  
+  /* NOUVELLES PROPRIÉTÉS : Fond plus clair par défaut */
+  background: rgba(0, 0, 0, 0.3) !important;
+  padding: 15px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  cursor: pointer;
+  
+  z-index: 100 !important;
+  position: absolute !important;
+}
+
+.text-element:hover {
+  background: rgba(0, 0, 0, 0.75) !important;
+  transform: translate(-50%, -50%) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 101 !important;
+}
+
+.text-elements {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.text-elements .text-element {
+  pointer-events: auto;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+    background: rgba(0, 0, 0, 0.1);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (max-width: 768px) {
+  .text-element {
+    background: rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  .text-element:hover {
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .text-element:active {
+    background: rgba(0, 0, 0, 0.75) !important;
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+}
+
+@supports (backdrop-filter: blur(10px)) {
+  .text-element {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+  
+  .text-element:hover {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+  .text-element {
+    background: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  .text-element:hover {
+    background: rgba(0, 0, 0, 0.85) !important;
+  }
 }
 
 
@@ -1139,3 +1214,4 @@
     height: 8px;
   }
 }
+
